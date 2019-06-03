@@ -12,7 +12,6 @@ class CustomImageView: UIImageView, UIGestureRecognizerDelegate {
     
     override init(image: UIImage?) {
         super.init(image: image)
-        isUserInteractionEnabled = true
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
@@ -23,7 +22,7 @@ class CustomImageView: UIImageView, UIGestureRecognizerDelegate {
         for gestureRecognizer in gestureRecognizers! {
             gestureRecognizer.delegate = self
         }
-        
+        isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,29 +30,40 @@ class CustomImageView: UIImageView, UIGestureRecognizerDelegate {
     }
     
     
-    @objc func handlePan(_ sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: sender.view)
-        if let view = sender.view {
-            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
-        }
-        sender.setTranslation(CGPoint.zero, in: sender.view)
-    }
-    
-    @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
-        if let view = sender.view {
-            view.transform = view.transform.scaledBy(x: sender.scale, y: sender.scale)
-            sender.scale = 1
+    @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed{
+            let translation = gestureRecognizer.translation(in: self.superview)
+            if let view = gestureRecognizer.view {
+                view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
+            }
+            gestureRecognizer.setTranslation(CGPoint.zero, in: self.superview)
         }
     }
     
-    @objc func handleRotation(_ sender: UIRotationGestureRecognizer) {
-        if let view = sender.view {
-            view.transform = view.transform.rotated(by: sender.rotation)
-            sender.rotation = 0
+    @objc func handlePinch(_ gestureRecognizer: UIPinchGestureRecognizer) {
+        
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed{
+            if let view = gestureRecognizer.view {
+                view.transform = view.transform.scaledBy(x: gestureRecognizer.scale, y: gestureRecognizer.scale)
+                gestureRecognizer.scale = 1.0
+            }
+        }
+        
+    }
+    
+    @objc func handleRotation(_ gestureRecognizer: UIRotationGestureRecognizer) {
+        
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed{
+            if let view = gestureRecognizer.view {
+                view.transform = view.transform.rotated(by: gestureRecognizer.rotation)
+                gestureRecognizer.rotation = 0.0
+            }
         }
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+    
 }

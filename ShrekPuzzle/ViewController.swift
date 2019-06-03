@@ -18,64 +18,22 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .green
-        
-        let imageView = CustomImageView(image: UIImage(named: "shrek1"))
-        imageView.contentMode = .scaleAspectFit
-        imageView.frame.size.width = self.view.frame.width/4
-        imageView.frame.size.height = self.view.frame.height/4
-        view.addSubview(imageView)
-        
-        var imageNamesToChange = imageNames
-        
-    //        for _ in 1...4 {
-    //            let randomNum = Int.random(in: 0...endIndex)
-    //            let imageString = imageNamesToChange[randomNum]
-    //            imageNamesToChange.remove(at: randomNum)
-    //            print (imageString)
-    //
-    //            switch endIndex{
-    //            case 3:
-    //                imageView1.image = UIImage(named: imageString)
-    //            case 2:
-    //                imageView2.image = UIImage(named: imageString)
-    //            case 1:
-    //                imageView3.image = UIImage(named: imageString)
-    //            default:
-    //                imageView4.image = UIImage(named: imageString)
-    //            }
-    //            endIndex -= 1
-    //        }
+        view.isUserInteractionEnabled = true
+        createImageView(imageName: "shrek1")
+        createImageView(imageName: "shrek2")
+        createImageView(imageName: "shrek3")
+        createImageView(imageName: "shrek4")
         
     }
-
-//    @IBAction func imageView1PanRecog(_ sender: UIPanGestureRecognizer) {
-//        let translation = sender.translation(in: self.view)
-//        if let view = sender.view {
-//            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
-//        }
-//        sender.setTranslation(CGPoint.zero, in: view)
-//    }
-//    @IBAction func imageView2PanRecog(_ sender: UIPanGestureRecognizer) {
-//        let translation = sender.translation(in: self.view)
-//        if let view = sender.view {
-//            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
-//        }
-//        sender.setTranslation(CGPoint.zero, in: view)
-//    }
-//    @IBAction func imageView3PanRecog(_ sender: UIPanGestureRecognizer) {
-//        let translation = sender.translation(in: self.view)
-//        if let view = sender.view {
-//            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
-//        }
-//        sender.setTranslation(CGPoint.zero, in: view)
-//    }
-//    @IBAction func imageView4PanRecog(_ sender: UIPanGestureRecognizer) {
-//        let translation = sender.translation(in: self.view)
-//        if let view = sender.view {
-//            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
-//        }
-//        sender.setTranslation(CGPoint.zero, in: view)
-//    }
+    
+    func createImageView (imageName : String){
+        let imageView = CustomImageView(image: UIImage(named: imageName))
+        imageView.contentMode = .scaleAspectFill
+        imageView.frame.size.width = self.view.frame.width/4
+        imageView.frame.size.height = self.view.frame.height/4
+        imageView.center = CGPoint(x: CGFloat.random(in: 25...view.frame.width-25), y: CGFloat.random(in: 50...view.frame.height-50))
+        view.addSubview(imageView)
+    }
     
 }
 
